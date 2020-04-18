@@ -1,0 +1,1 @@
+.\build.bat && .\bin\app.exe
