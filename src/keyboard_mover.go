@@ -54,3 +54,7 @@ func (km *KeyboardMover) onUpdate() error {
 
 	return nil
 }
+
+func (*KeyboardMover) onCollision(_ *Element) error {
+	return nil
+}

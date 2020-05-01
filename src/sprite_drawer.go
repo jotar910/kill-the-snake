@@ -45,3 +45,7 @@ func (sd *SpriteDrawer) onDraw(r *sdl.Renderer) error {
 func (sd *SpriteDrawer) onUpdate() error {
 	return nil
 }
+
+func (*SpriteDrawer) onCollision(_ *Element) error {
+	return nil
+}

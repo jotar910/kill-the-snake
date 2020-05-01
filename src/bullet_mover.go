@@ -6,25 +6,25 @@ import (
 	"github.com/veandco/go-sdl2/sdl"
 )
 
-type StraightMover struct {
+type BulletMover struct {
 	speed        float64
 	spriteDrawer *SpriteDrawer
 	container    *Element
 }
 
-func NewStraightMover(container *Element, speed float64) (*StraightMover, error) {
-	return &StraightMover{
+func NewBulletMover(container *Element, speed float64) (*BulletMover, error) {
+	return &BulletMover{
 		container:    container,
 		spriteDrawer: container.getComponent(&SpriteDrawer{}).(*SpriteDrawer),
 		speed:        speed,
 	}, nil
 }
 
-func (sm *StraightMover) onDraw(r *sdl.Renderer) error {
+func (sm *BulletMover) onDraw(r *sdl.Renderer) error {
 	return nil
 }
 
-func (sm *StraightMover) onUpdate() error {
+func (sm *BulletMover) onUpdate() error {
 	pos := sm.container.Position
 	angle := sm.container.Angle * math.Pi / 180.0
 
@@ -39,5 +39,10 @@ func (sm *StraightMover) onUpdate() error {
 	if newX < -float64(drawer.W) || newX > limitX || newY < -float64(drawer.H) || newY > limitY {
 		sm.container.Active = false
 	}
+	return nil
+}
+
+func (bm *BulletMover) onCollision(e *Element) error {
+	bm.container.Active = false
 	return nil
 }

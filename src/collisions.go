@@ -2,39 +2,11 @@ package main
 
 import (
 	"math"
-	"reflect"
 )
 
-type HitFn = func(b *Body)
-
 type Body struct {
-	position      *Vector
-	radius        float64
-	afterHit      func()
-	collisionType CollisionBehaviour
-}
-
-type CollisionBehaviour interface {
-	Collision(b *Body)
-	DoCollides(b *Body) bool
-}
-
-type BulletCollision struct {
-	hit       HitFn
-	container *Body
-}
-
-func (bc *BulletCollision) Collision(b *Body) {
-	bc.hit(b)
-	b.afterHit()
-}
-
-func (bc *BulletCollision) DoCollides(b *Body) bool {
-	return reflect.TypeOf(b.collisionType) == reflect.TypeOf(bc) && circleCollides(bc.container, b)
-}
-
-func NewBulletCollision(h HitFn, b *Body) (*BulletCollision, error) {
-	return &BulletCollision{hit: h, container: b}, nil
+	position *Vector
+	radius   float64
 }
 
 func circleCollides(c1 *Body, c2 *Body) bool {
@@ -44,7 +16,7 @@ func circleCollides(c1 *Body, c2 *Body) bool {
 	return dist <= c1.radius+c2.radius
 }
 
-func CheckCollisions(elements []*Element) error {
+/* func CheckCollisions(elements []*Element) error {
 	lenElements := len(elements)
 	for i := 0; i < lenElements; i++ {
 		for j := 0; j < lenElements; j++ {
@@ -61,4 +33,4 @@ func CheckCollisions(elements []*Element) error {
 		}
 	}
 	return nil
-}
+} */

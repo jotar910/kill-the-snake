@@ -87,14 +87,17 @@ func main() {
 				fmt.Println("update element", err)
 				os.Exit(1)
 			}
+			err = element.Collision(elements)
+			if err != nil {
+				fmt.Println("update element", err)
+				os.Exit(1)
+			}
 			err = element.Draw(renderer)
 			if err != nil {
 				fmt.Println("drawing element", err)
 				os.Exit(1)
 			}
 		}
-
-		CheckCollisions(elements)
 
 		renderer.Present()
 	}

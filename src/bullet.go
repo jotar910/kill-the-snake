@@ -40,6 +40,7 @@ func newBullet(r *sdl.Renderer) (*Element, error) {
 	bullet.Position = Vector{X: 0, Y: 0}
 	bullet.Rotation = 0
 	bullet.Active = false
+	bullet.Tag = "bullet"
 
 	drawer, err := NewSpriteDrawer(r, bulletFilename, bullet)
 	if err != nil {
@@ -47,18 +48,17 @@ func newBullet(r *sdl.Renderer) (*Element, error) {
 	}
 	bullet.addComponent(drawer)
 
-	mover, err := NewStraightMover(bullet, bulletSpeed)
+	mover, err := NewBulletMover(bullet, bulletSpeed)
 	if err != nil {
 		return nil, errors.New(fmt.Sprintln("creating straight mover component for bullet element", err))
 	}
 	bullet.addComponent(mover)
 
-	bullet.BodyHit = Body{
-		radius:        7,
-		position:      &bullet.Position,
-		afterHit:      func() { bullet.Active = false },
-		collisionType: &BulletCollision{},
+	hitter := Body{
+		radius:   7,
+		position: &bullet.Position,
 	}
+	bullet.Hitters = append(bullet.Hitters, hitter)
 
 	return bullet, nil
 }

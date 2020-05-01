@@ -42,6 +42,10 @@ func (ks *KeyboardShooter) onUpdate() error {
 	return nil
 }
 
+func (*KeyboardShooter) onCollision(_ *Element) error {
+	return nil
+}
+
 func (ks *KeyboardShooter) shoot(x, y float64, angle float64) {
 	if b, ok := NewBulletFromPool(); ok {
 		b.Active = true

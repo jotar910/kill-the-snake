@@ -21,8 +21,8 @@ type Element struct {
 	Rotation   float64
 	Angle      float64
 	Active     bool
-	BodyHit    Body
-	Collisions []CollisionBehaviour
+	Tag        string
+	Hitters    []Body
 	components []Component
 }
 
@@ -61,6 +61,33 @@ func (e *Element) Update() error {
 		err := c.onUpdate()
 		if err != nil {
 			return errors.New(fmt.Sprintln("updating component on element", err))
+		}
+	}
+	return nil
+}
+
+func (e *Element) Collision(elements []*Element) error {
+	for _, other := range elements {
+		if !other.Active || other == e {
+			continue
+		}
+		for _, b1 := range e.Hitters {
+			for _, b2 := range other.Hitters {
+				if circleCollides(&b1, &b2) {
+					for _, c := range e.components {
+						err := c.onCollision(other)
+						if err != nil {
+							return errors.New(fmt.Sprintln("running collisions component on element", err))
+						}
+					}
+					for _, c := range other.components {
+						err := c.onCollision(e)
+						if err != nil {
+							return errors.New(fmt.Sprintln("running collisions component on element", err))
+						}
+					}
+				}
+			}
 		}
 	}
 	return nil
