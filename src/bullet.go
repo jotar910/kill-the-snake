@@ -53,5 +53,12 @@ func newBullet(r *sdl.Renderer) (*Element, error) {
 	}
 	bullet.addComponent(mover)
 
+	bullet.BodyHit = Body{
+		radius:        7,
+		position:      &bullet.Position,
+		afterHit:      func() { bullet.Active = false },
+		collisionType: &BulletCollision{},
+	}
+
 	return bullet, nil
 }

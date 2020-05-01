@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"os"
-	"time"
 
 	"github.com/veandco/go-sdl2/img"
 	"github.com/veandco/go-sdl2/sdl"
@@ -95,7 +94,8 @@ func main() {
 			}
 		}
 
+		CheckCollisions(elements)
+
 		renderer.Present()
-		time.Sleep(60 / 1000 * time.Millisecond)
 	}
 }

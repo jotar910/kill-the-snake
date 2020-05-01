@@ -50,6 +50,7 @@ func (km *KeyboardMover) onUpdate() error {
 	}
 
 	km.container.Position = Vector{X: newX, Y: newY}
+	km.container.Angle = angle
 
 	return nil
 }

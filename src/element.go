@@ -21,6 +21,8 @@ type Element struct {
 	Rotation   float64
 	Angle      float64
 	Active     bool
+	BodyHit    Body
+	Collisions []CollisionBehaviour
 	components []Component
 }
 

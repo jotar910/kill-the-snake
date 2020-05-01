@@ -32,6 +32,17 @@ func NewSnake(r *sdl.Renderer, typ SnakeType) (*Element, error) {
 	snake.Active = true
 	snake.Rotation = 0
 
+	snake.BodyHit = Body{
+		radius:   15,
+		position: &snake.Position,
+	}
+
+	bulletCollision, err := NewBulletCollision(func(_ *Body) { snake.Active = false }, &snake.BodyHit)
+	if err != nil {
+		return nil, errors.New("creating the bullet collision for the snake")
+	}
+	snake.Collisions = append(snake.Collisions, bulletCollision)
+
 	return snake, nil
 }
 

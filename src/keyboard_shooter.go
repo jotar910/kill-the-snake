@@ -33,7 +33,7 @@ func (ks *KeyboardShooter) onUpdate() error {
 
 	angle, ok := utils.AngleFromKeys(keys)
 	if !ok {
-		return nil
+		angle = ks.container.Angle
 	}
 
 	if keys[sdl.SCANCODE_SPACE] == 1 && time.Since(ks.lastShoot) >= ks.coldown {
